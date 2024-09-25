@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="snippet_id" inherit_id="website.snippets">
+        <xpath expr="//div[@id='snippet_structure']" position="before">
+            <div class="o_panel_body">
+
+                 <t t-snippet="landingpage.empresa"
+                   t-thumbnail="landingpage/static/src/img/form-template.png"/>
+
+                 <t t-snippet="landingpage.candidato"
+                   t-thumbnail="landingpage/static/src/img/form-template.png"/>
+
+                <t t-snippet="landingpage.home"
+                   t-thumbnail="/landingpage/static/src/img/chimney.png"/>
+
+                <t t-snippet="landingpage.formweb"
+                   t-thumbnail="/landingpage/static/src/img/HOMEMAOTELEFONE.png"/>
+
+                 <t t-snippet="landingpage.quemsomos"
+                   t-thumbnail="/landingpage/static/src/img/hOMEMDEPERGUNTADFREQUENTES.svg"/>
+
+
+                    <t t-snippet="landingpage.customblog"
+                   t-thumbnail="/landingpage/static/src/img/hOMEMDEPERGUNTADFREQUENTES.svg"/>
+
+                  <t t-snippet="landingpage.visualizacao"
+                   t-thumbnail="/landingpage/static/src/img/hOMEMDEPERGUNTADFREQUENTES.svg"/>
+
+                     <t t-snippet="landingpage.homepage"
+                   t-thumbnail="/landingpage/static/src/img/Background1.svg"/>
+
+
+            </div>
+        </xpath>
+    </template>
+</odoo>

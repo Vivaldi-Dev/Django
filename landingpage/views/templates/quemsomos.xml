@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="quemsomos" name="quemsomos">
+
+        <style>
+            @font-face {
+            font-family: 'Azonix';
+            src: url(/landingpage/static/src/Fonts/Azonix.otf);
+            }
+
+            @font-face {
+            font-family: 'Montserrat';
+            src: url(/landingpage/static/src/Fonts/Montserrat-VariableFont_wght.ttf);
+            }
+
+            .text {
+            font-family: 'Azonix';
+            font-size: 44px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: var(--Gradiente-titulos, linear-gradient(93deg, #749C07 47.26%, #749C07 47.26%, #003E24
+            127.96%));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            }
+
+            .sobre {
+            text-align: justify;
+            font-family: Azonix;
+            font-size: 151.556px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 89.523%;
+            text-transform: capitalize;
+            background: linear-gradient(264deg, #749d08 44.99%, #006738 117.24%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            }
+
+            .sobreSpan {
+            background: linear-gradient(180deg, #749d08 0%, #006738 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            }
+
+            /* */
+            .tudo {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 14%;
+            }
+
+            .body {
+            width: 172.286px;
+            height: 170.965px;
+            border-radius: 50%;
+            background-color: #7ea004;
+            position: absolute;
+            border: 6px solid #E9E9E9;
+            transform: translate(25%, -50%);
+            }
+
+            .tudo .flex .body .texto {
+            position: absolute;
+            width: inherit;
+            height: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            }
+
+            .Ntizu {
+            font-family: 'Azonix';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 88.1039px;
+            line-height: 89px;
+            text-transform: capitalize;
+            color: #FFFFFF;
+            }
+
+            .tudo .flex .corpo {
+            width: 260.571px;
+            height: 272.184px;
+            background-color: #7ea004;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            }
+
+            .tudo .flex .corpo h4 {
+            color: #fdfefe;
+            text-align: center;
+            font-family: Montserrat;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+            margin-top: 30%;
+            }
+
+            .tudo .flex .corpo p {
+            color: #fdfefe;
+            text-align: center;
+            color: #FDFEFE;
+            text-align: center;
+            font-family: Cairo;
+            font-size: 17.673px;
+            font-style: normal;
+            font-weight: 700;
+
+            }
+
+            .menu {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 900;
+            font-size: 24px;
+            line-height: 29px;
+            text-transform: capitalize;
+            color: #FFFFFF;
+            }
+
+            .customfooter {
+            background: linear-gradient(185.6deg, #006738 -39.79%, #216720 49.55%, #88A816 128.29%);
+            }
+
+            .li {
+
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 15px;
+            color: #FEFEFE;
+            align-items: flex-end;
+            }
+
+            @media only screen and (max-width: 768px) {
+
+            .tudo .flex .corpo {
+            width: 165px;
+            height: 197px;
+
+            }
+
+            .tudo .flex .body {
+
+            width: 103.505px;
+            height: 100.455px;
+            flex-shrink: 0;
+            border: 3px solid #E9E9E9;
+
+            transform: translate(31%, -50%);
+            }
+
+            .tudo .flex .corpo p {
+            font-size: 12px;
+            }
+
+            .tudo .flex .corpo h4 {
+            font-size: 12px;
+            }
+
+            .tudo .flex .body .texto img {
+            width: 45.821px;
+            height: 44.349px;
+            }
+
+            }
+
+            @media only screen and (max-width: 640px) {
+
+            .tudo .flex .corpo {
+            width: 98px;
+            height: 167px;
+
+            }
+
+            .tudo .flex .body {
+
+            width: 53.505px;
+            height: 50.455px;
+            flex-shrink: 0;
+            border: 3px solid #E9E9E9;
+
+            transform: translate(38%, -50%);
+            }
+
+            .tudo .flex .corpo p {
+            font-size: 12px;
+            }
+
+            .tudo .flex .corpo h4 {
+            font-size: 12px;
+            }
+
+            .tudo .flex .body .texto img {
+            width: 25.821px;
+            height: 24.349px;
+            }
+
+            .jojtext {
+            font-size: 55.4828px;
+            }
+
+            .imgfluid {
+            width: 94.63px;
+            height: 81.39px;
+            }
+
+            .jobconection {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 9.87654px;
+            line-height: 153.52%;
+            }
+
+            .quemS {
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 24px;
+            }
+
+            .fontstyle {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 132.02%;
+            }
+
+            }
+        </style>
+
+        <section class="quemsomos">
+            <div class="container">
+                <div class="row d-flex align-items-center ">
+                    <div class="d-flex justify-content-center gap-3 align-items-center">
+                        <div class="col-sm-6">
+                            <p class="m-0 jobconection">Job Connection</p>
+                            <h1 class="sobre jojtext">
+                                <span class="sobreSpan">Ntizu</span>
+                            </h1>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="col-sm-6 ">
+
+                                <img class="imgfluid" src="/landingpage/static/src/img/hOMEMDEPERGUNTADFREQUENTES.svg"
+                                     alt=""></img>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <h1 class="text quemS">Quem somos</h1>
+                        <p class="fontstyle">A palavra “Ntizu” significa emprego em changana um dos dialetos do sul de
+                            Moçambique.
+                            Mas a nossa visão vai muito além de uma simples plataforma de emprego.
+                        </p>
+
+                        <p class="fontstyle">Criamos a nossa plataforma com um objectivo simples: conectar os que
+                            contratam aos que procuram da forma mais simples e rápida. Porque é isso que temos visto em
+                            nossas
+                            próprias experiências
+                            como candidatos a emprego e empregadores. Não existe falta de emprego só existe falta de
+                            conexão.
+                        </p>
+
+                        <p class="fontstyle">Vemos muita mão de obra qualificada num pais,
+                            e muita necessidade em outros. Vimos muita vontade de trabalhar,
+                            e pouca oportunidade de se qualificar. Vemos muita procura de candidatos empenhados,
+                            e poucos recursos para os recrutar.
+                        </p>
+
+                        <p class="fontstyle">
+                            Entendemos os desafios e frustrações que frequentemente acompanham o processo de
+                            recrutamento.
+                            A complexidade, as tarefas que consomem tempo e a incerteza - esses eram obstáculos que
+                            estávamos
+                            determinados a superar.
+
+                        </p>
+
+                        <p class="fontstyle">A Ntizu - Job Connection surge com isso em mente.</p>
+                        <p class="fontstyle">Junte-se a nós na redefinição das conexões: pois a Ntizu é mais do que um portal
+                            de
+                            recrutamento - é
+                            a filosofia que nos impulsiona a inovar, simplificar e elevar.
+                        </p>
+
+                        <p class="fontstyle">Se está à procura de emprego, ou à procura de recrutar candidatos para a sua
+                            empresa,
+                            aceda a
+                            plataforma Ntizu e dê os seus primeiros passos rumo ao sucesso.
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+                <div class="tudo mb-5">
+                    <div class="flex">
+                        <div class="body">
+
+                            <div class="texto d-flex align-items-center justify-content-center">
+                                <img src="Landing_page/vectorSmartObject.svg" alt=""/>
+                            </div>
+
+                        </div>
+                        <div class="corpo">
+                            <h4>VISÃO</h4>
+                            <p>Simplificar o processo de recrutamento internacional e criar conexões duradouras.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="body">
+                            <div class="texto d-flex align-items-center justify-content-center">
+                                <img src="Landing_page/vectorSmartObjectCopy.svg" alt=""/>
+                            </div>
+                        </div>
+                        <div class="corpo">
+                            <h4>MISSÃO</h4>
+                            <p class="p-2">Capacitar, formar e enquadrar os melhores talentos às melhores empresas.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="body">
+                            <div class="texto">
+                                <img src="/Novowebsite/static/src/img/vectorSmartObject (1).png" alt=""/>
+                            </div>
+                        </div>
+                        <div class="corpo">
+                            <h4>VALORES</h4>
+                            <p>Capacitar, formar e enquadrar os melhores talentos às melhores empresas.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </template>
+</odoo>

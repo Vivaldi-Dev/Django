@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <template id="empresa" name="Form Empresa">
+
+        <style>
+            @font-face {
+            font-family: 'Azonix';
+            src: url(/landingpage/static/src/Fonts/Azonix.otf);
+            }
+
+            .stylebutton{
+            background-color: #678C2E;
+            border-color: #678C2E;
+            font-family: 'Azonix', sans-serif;
+            }
+
+            .lado{
+            margin-left: 15%;
+            }
+
+            .font {
+            font-family: 'Azonix';
+            font-size: calc(1.375rem + 1.5vw);
+            font-weight: 300;
+            line-height: 1.2;
+
+            }
+
+            .style_p{
+            color: rgba(255, 255, 255, .5) ;
+            text-align: center ;
+            font-size: 1rem ;
+            }
+
+            .style {
+            color: #6a9c1e;
+            font-weight: 700 ;
+            line-height: 1.2;
+            font-size: calc(1.325rem + .9vw);
+            }
+
+            .custom-container {
+            background-image: url(/landingpage/static/src/img/background3.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            }
+
+            .button {
+            border: none;
+            background: none;
+            color: rgba(255, 255, 255, .5);
+            }
+
+            .customwith {
+            width: 75%;
+            background-color: #f1f1f1;
+            padding: 30px;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #69912c, #105E39 13%, #f1f1f1 10%);
+
+            }
+
+            .custombuttom {
+            background-image: url(Landing_page/Teclado_verde.webp);
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: 'Azonix';
+
+            }
+
+            @media (max-width: 768px) {
+            .customwith {
+            width: 100% !important;
+            padding: 10px;
+
+            }
+
+            .lado{
+            margin-left: initial;
+            }
+            .custom-container {
+            background-image: url(/landingpage/static/src/img/background3.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: 10%;
+
+            }
+            }
+        </style>
+
+
+        <section class="empresa">
+
+            <div class="container-fluid custom-container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 d-flex  w-100 vh-100   align-items-center justify-content-center vh-100">
+                        <div class="text-center">
+                            <h4 class="font text-white">Quer emprego ?</h4>
+                            <h3 class="style">E so clicar</h3>
+                            <p class="mb-0 style_p">Com a Ntizu pode aceder a vagas de emprego locais e internacionais
+                            </p>
+                            <p class="style_p">Recrutamento nao e uma batalha sem fim.</p>
+                            <h3 class="mb-5 text-white">Cadastre-se hoje e deixe-nos agilizar o processo para si</h3>
+
+                            <form method="POST" action="/form/submit/" class="customwith lado text-center">
+                                <h3 class="text-white position-absolute">Empresa</h3>
+                                <div class="mb-3 mt-5">
+                                    <input type="text" name="nome_empresa" class="form-control" id="exampleInputEmail1"
+                                           aria-describedby="emailHelp" placeholder="Nome da Empresa"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" name="email" class="form-control" id="exampleInputPassword1"
+                                           placeholder="Exemplo@gmail.com"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="tel" name="numero" class="form-control" id="exampleInputPassword1"
+                                           placeholder="Numero de telefone"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="number" name="nuit" class="form-control" id="exampleInputPassword1"
+                                           placeholder="NUIT"></input>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button type="submit" name="Reset" class=" button text-white ">Voltar</button>
+                                    <button type="submit" class=" btn custombuttom ">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </template>
+
+
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="customblog_form_view" model="ir.ui.view">
+        <field name="name">customblog.form.view</field>
+        <field name="model">customblog.customblog</field>
+        <field name="arch" type="xml">
+            <form string="Menu">
+                <sheet>
+                    <group>
+                        <field name="title"/>
+                        <field name="author"/>
+                        <field name="published_date"/>
+                        <field name="category"/>
+                        <field name="tags"/>
+                        <field name="post_title"/>
+                        <field name="content"/>
+                        <field name="comments"/>
+                        <field name="comments"/>
+                        <field name="featured_image" widget="image" class="oe_avatar"/>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="customblog_tree_view" model="ir.ui.view">
+        <field name="name">customblog.tree.view</field>
+        <field name="model">customblog.customblog</field>
+        <field name="arch" type="xml">
+            <tree string="Menu">
+                <field name="title"/>
+                <field name="author"/>
+                <field name="published_date"/>
+                <field name="category"/>
+                <field name="tags"/>
+                <field name="post_title"/>
+                <field name="content"/>
+                <field name="comments"/>
+                <field name="comments"/>
+                <field name="featured_image" widget="image" class="oe_avatar"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="customblog_action" model="ir.actions.act_window">
+        <field name="name">Menu</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">customblog.customblog</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                no data yet !
+            </p>
+            <p>
+                please add new data
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_customblog"
+              name="Menu Blog"
+              sequence="100"
+              parent="website.menu_website_configuration"/>
+
+    <menuitem id="menu_blog"
+              name="Blog Menu"
+              sequence="1"
+              parent="menu_customblog"
+              action="customblog_action"/>
+
+
+</odoo>

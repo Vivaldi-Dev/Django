@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="visualizacao" name="Blog View">
+
+            <style>
+                @font-face {
+                font-family: 'Montserrat';
+                src: url(Fonts/Montserrat-VariableFont_wght.ttf);
+                }
+
+                .custombg {
+                background-image: url(/landingpage/static/src/img/AdobeStock.jpeg);
+                height: 500px;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+
+                }
+
+                .blogtext h1 {
+                font-family: 'Montserrat';
+                font-style: normal;
+                font-weight: 800;
+                font-size: 54px;
+                line-height: 66px;
+                text-transform: capitalize;
+                color: #FFFFFF;
+                }
+            </style>
+
+            <section>
+                <div class="custombg bg-image d-flex align-items-center justify-content-center">
+                    <div class=" d-flex align-items-center justify-content-center">
+                        <div class="blogtext w-50 text-center">
+                            <h1>Como alcancar a
+                                Satisfacao dos seus
+                                clientes, na sua empresa
+                                de hotelaria
+                            </h1>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="container mt-5">
+                    <div class="row">
+                        <ul t-foreach="blog_data" t-as="entry">
+                            <li class="mb-5">
+                                <p>
+                                    <t t-esc="key_value.author"/>
+                                </p>
+                            </li>
+                            <li class="mb-5">
+                                <p>
+                                    <t t-esc="key_value.content"/>
+                                </p>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+    </template>
+</odoo>

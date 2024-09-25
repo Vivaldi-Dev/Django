@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="landingpage.teste" name="teste">
+        <t t-call="website.layout">
+
+            <!--            -->
+            <style>
+                @font-face {
+                font-family: 'Montserrat';
+                src: url(Fonts/Montserrat-VariableFont_wght.ttf);
+                }
+
+                .custombg {
+                background-image: url(/landingpage/static/src/img/AdobeStock.jpeg);
+                height: 500px;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+
+                }
+
+                .blogtext h1 {
+                font-family: 'Montserrat';
+                font-style: normal;
+                font-weight: 800;
+                font-size: 54px;
+                line-height: 66px;
+                text-transform: capitalize;
+                color: #FFFFFF;
+                }
+
+                /* card blog*/
+                .direction {
+                text-align: center;
+                }
+
+                .direction button {
+                font-family: cursive;
+                font-weight: bold;
+                background-color: #ffffff44;
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                transition: 0.5s;
+                margin: 0 10px;
+                }
+
+                .direction button:hover {
+                background-color: #ffffff;
+                }
+
+                .Item {
+                border-radius: 15px;
+                width: 270px;
+                height: 400px;
+
+                overflow: hidden;
+                transition: 0.5s;
+                margin: 10px;
+                scroll-snap-align: start;
+                }
+
+                .COnTent {
+                height: 100%;
+                background-image: linear-gradient(to bottom, #1f4e72, #ECECF2);
+                position: relative;
+                }
+
+                .COnTent img {
+                width: 100%;
+                height: 100%;
+                }
+
+                #liSt {
+                display: flex;
+                width: max-content;
+                }
+
+                #FormList {
+
+                max-width: 100%;
+                overflow: auto;
+                margin: 100px auto 50px;
+                scroll-behavior: smooth;
+                scroll-snap-type: both;
+                }
+
+
+                .pintura {
+                background-color: black;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                opacity: 0.5;
+                text-align: center;
+                }
+
+                .pintura p {
+                padding: 10px;
+                }
+
+                #FormList::-webkit-scrollbar {
+                display: none;
+                }
+
+                @media screen and (max-width: 1024px) {
+                .Item {
+                width: calc(33.3vw - 20px);
+                }
+
+                .direction {
+                display: none;
+                }
+                }
+
+                @media screen and (max-width: 768px) {
+                .Item {
+                width: calc(40vw - 20px);
+                }
+
+                .direction {
+                display: none;
+                }
+                }
+
+                @media screen and (max-width: 640px) {
+                .Item {
+                width: calc(70vw - 20px);
+                }
+
+                .direction {
+                display: none;
+                }
+                }
+
+                #FormList center {
+                margin-top: 40px;
+
+                }
+            </style>
+            <section class="blog">
+                <div class="custombg bg-image d-flex align-items-center justify-content-center">
+                    <div class=" d-flex align-items-center justify-content-center">
+                        <div class="blogtext w-50 text-center">
+                            <h1>
+                                <t t-esc="key_value.post_title"/>
+                            </h1>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="container mt-5">
+                    <div class="row">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <p>
+                                    <t t-esc="key_value.author"/>
+                                </p>
+                            </li>
+                            <li class="mb-1">
+                                <p>
+                                    <t t-esc="key_value.content"/>
+                                </p>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!--            -->
+
+            <div class="container">
+                <div class="row">
+                    <div id="FormList">
+
+                        <div id="liSt">
+                            <t t-foreach="key_value" t-as="record">
+                                <div class="Item">
+
+
+                                    <div class="COnTent">
+                                        <a t-attf-href="/teste/#{record.id}">
+                                            <img src="/landingpage/static/src/img/AdobeStock.jpeg"
+                                                 alt="" loading="lazy"/>
+                                            <div class="pintura" onclick="abrirLink()">
+                                                <p style="color: white">Como elaborar um contrato para seu
+                                                    colaborador?
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </t>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </t>
+
+    </template>
+
+</odoo>

@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_landingpage_landingpage,landingpage,model_landingpage_landingpage,,1,1,1,1
+access_empresa_empresa,empresa,model_empresa_empresa,,1,1,1,1
+access_candidato_candidato,candidato,model_candidato_candidato,,1,1,1,1
+access_recrutamento_recrutamento,recrutamento,model_recrutamento_recrutamento,,1,1,1,1
+access_formweb_formweb,formweb,model_formweb_formweb,,1,1,1,1
+access_customblog_customblog,customblog,model_customblog_customblog,,1,1,1,1
+

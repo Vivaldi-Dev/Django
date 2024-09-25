@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="empresa_form_view" model="ir.ui.view">
+        <field name="name">empresa.form.view</field>
+        <field name="model">empresa.empresa</field>
+        <field name="arch" type="xml">
+            <form string="Menu">
+                <sheet>
+                    <group>
+                        <field name="nome_empresa"/>
+                        <field name="email"/>
+                        <field name="numero"/>
+                        <field name="nuit"/>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="empresa_tree_view" model="ir.ui.view">
+        <field name="name">empresa.tree.view</field>
+        <field name="model">empresa.empresa</field>
+        <field name="arch" type="xml">
+            <tree string="Empresa">
+                <field name="nome_empresa"/>
+                <field name="email"/>
+                <field name="numero"/>
+                <field name="nuit"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="empresa_action" model="ir.actions.act_window">
+        <field name="name">Menu</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">empresa.empresa</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                no data yet
+            </p>
+            <p>
+                Please add a new data!
+            </p>
+        </field>
+    </record>
+
+
+    <!-- candidato.candidato  -->
+
+
+    <record id="candidato_form_view" model="ir.ui.view">
+        <field name="name">candidato.form.view</field>
+        <field name="model">candidato.candidato</field>
+        <field name="arch" type="xml">
+            <form string="restaurante">
+                <sheet>
+                    <group>
+                        <field name="nome"/>
+                        <field name="apelido"/>
+                        <field name="profissao"/>
+                        <field name="email"/>
+                        <field name="telefone"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="candidato_tree_view" model="ir.ui.view">
+        <field name="name">candidato.tree.view</field>
+        <field name="model">candidato.candidato</field>
+        <field name="arch" type="xml">
+            <tree string="Candidato">
+                <field name="nome"/>
+                <field name="apelido"/>
+                <field name="profissao"/>
+                <field name="email"/>
+                <field name="telefone"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="candidato_action" model="ir.actions.act_window">
+        <field name="name">Candidato</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">candidato.candidato</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                no data yet
+            </p>
+            <p>
+                Please add a new data!
+            </p>
+        </field>
+    </record>
+
+    <!--    -->
+
+
+    <menuitem id="menu_menu"
+              name="Data Form"
+              sequence="85"
+              parent="website.menu_website_configuration"/>
+
+    <menuitem id="menu_empresa"
+              name="Empresa"
+              sequence="1"
+              parent="menu_menu"
+              action="empresa_action"/>
+
+    <menuitem id="menu_menu_item"
+              name="Candidato"
+              sequence="2"
+              parent="menu_menu"
+              action="candidato_action"/>
+
+
+</odoo>

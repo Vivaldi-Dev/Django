@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <template id="candidato" name="form candidato">
+
+
+        <style>
+            @font-face {
+            font-family: 'Azonix';
+            src: url(/landingpage/static/src/Fonts/Azonix.otf);
+            }
+
+            .stylebutton{
+            background-color: #678C2E;
+            border-color: #678C2E;
+            font-family: 'Azonix', sans-serif;
+            }
+            .customstyle{
+            padding: 8px 36px;
+            border-radius: px;
+            background-image: url(Landing_page/Teclado_verde.webp);
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: none;
+            color: white;
+            font-family: 'Azonix', sans-serif;
+            font-size: small;
+            }
+
+            .bg-dark_custom{
+            opacity: 0.8;
+            background: black;
+            }
+
+
+            .lado{
+            margin-left: 15%;
+            }
+
+            .customtop{
+            margin-top: -15px;
+            font-family: 'Azonix';
+            font-size: large;
+            }
+
+            .font {
+            font-family: 'Azonix';
+            font-size: calc(1.375rem + 1.5vw);
+            font-weight: 300;
+            line-height: 1.2;
+            }
+
+            .vertil{
+            vertical-align: bottom;
+            }
+
+            .style_p{
+            color: rgba(255, 255, 255, .5) ;
+            text-align: center ;
+            font-size: 1rem ;
+            }
+
+            .style {
+            color: #6a9c1e;
+            font-weight: 700 ;
+            line-height: 1.2;
+            font-size: calc(1.325rem + .9vw);
+            }
+
+            .custom-container {
+            background-image: url(/landingpage/static/src/img/background3.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            }
+
+            .button {
+            border: none;
+            background: none;
+            color: rgba(29, 26, 26, 0.5);
+            }
+
+            .customwith {
+            width: 75%;
+            background-color: #f1f1f1;
+            padding: 30px;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #69912c, #105E39 13%, #f1f1f1 10%);
+
+            }
+
+
+            @media (max-width: 768px) {
+            .customwith {
+            width: 100% !important;
+            padding: 10px;
+            }
+
+            .customtop{
+            margin-top: initial;
+            }
+
+            .lado{
+            margin-left: initial;
+            }
+            .custom-container {
+            background-image: url(/landingpage/static/src/img/background3.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: 10%;
+
+            }
+            }
+        </style>
+
+        <section class="candidato">
+
+            <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark_custom p-md-3">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <img src="/landingpage/static/src/img/logo.svg" alt=""></img>
+                    </a>
+                    <button
+                            class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav"
+                            aria-controls="navbarNav"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                    >
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <div class="mx-auto"></div>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#">
+                                    <img src="/landingpage/static/src/img/redessociaslinkd.svg" alt=""></img>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#">
+                                    <img src="/landingpage/static/src/img/redessociasfacebook.svg" alt=""></img>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#">
+                                    <img src="/landingpage/static/src/img/redessociasinstagram.svg" alt=""></img>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="container-fluid custom-container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 d-flex  w-100 vh-100   align-items-center justify-content-center vh-100">
+                        <div class="text-center">
+                            <h4 class="font text-white">Quer emprego ?</h4>
+                            <h3 class="style">É so clicar</h3>
+                            <p class="mb-0 style_p">Com a Ntizu pode aceder a vagas de emprego locais e internacionais
+                            </p>
+                            <p class="style_p">Recrutamento nao e uma batalha sem fim.</p>
+                            <h3 class="mb-5 text-white fw-bold">Cadastre-se hoje e deixe-nos agilizar o processo para si
+                                !
+                            </h3>
+
+                            <form method="POST" action="/candidato/submit/" class="customwith lado text-center">
+                                <h3 class="text-white position-absolute customtop ">Candidato</h3>
+
+                                <div class="mb-3 mt-5">
+                                    <input type="text" name="nome" class="form-control border-0 p-2"
+                                           id="exampleInputEmail1"
+                                           aria-describedby="emailHelp" placeholder="Nome Completo"></input>
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="text" name="apelido" class="form-control border-0 p-2"
+                                           id="exampleInputPassword1"
+                                           placeholder="Apelido"></input>
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="text" name="profissao" class="form-control border-0 p-2"
+                                           id="exampleInputPassword1"
+                                           placeholder="Profissão ..."></input>
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="email" name="email" class="form-control border-0 p-2"
+                                           id="exampleInputPassword1"
+                                           placeholder="Exemplo@gmail.com"></input>
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="tel" name="telefone" class="form-control border-0 p-2"
+                                           id="exampleInputPassword1"
+                                           placeholder="Numero de telefone"></input>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button type="submit" class=" button ">
+                                        <img class="vertil" src="/landingpage/static/src/img/chevron-left.svg"
+                                             alt=""></img>
+                                        Voltar
+                                    </button>
+                                    <button type="submit" class="  customstyle ">Submit</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </template>
+
+
+</odoo>
