@@ -1,6 +1,6 @@
-from django.urls import path
+f
+rom django.urls import path
 from . import views
-
 urlpatterns = [
     path("list", views.car_list, name="car list"),
     path("list/<int:pk>", views.car_detail_view, name="car detail"),
