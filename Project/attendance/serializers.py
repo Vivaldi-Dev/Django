@@ -13,8 +13,10 @@ class Employee_serializers(serializers.ModelSerializer):
 
 
 class CheckInSerializer(serializers.Serializer):
-    codigo = serializers.CharField()
+    codigo = serializers.CharField(write_only=True)  # Adicione write_only=True
     checkin = serializers.DateTimeField(input_formats=["%d-%m-%Y %H:%M"])
+    funcionario_nome = serializers.CharField(source='funcionario.nome', read_only=True)
+    funcionario_codigo = serializers.CharField(source='funcionario.codigo', read_only=True)
 
     def validate(self, data):
         codigo = data.get('codigo')
@@ -38,7 +40,6 @@ class CheckInSerializer(serializers.Serializer):
             data=validated_data['checkin'].date(),
             checkin=validated_data['checkin']
         )
-
 
 class CheckOutSerializer(serializers.Serializer):
     codigo = serializers.CharField()
