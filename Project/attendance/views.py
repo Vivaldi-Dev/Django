@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from .models import Funcionario, Atendimento,Atividade
-from .serializers import Employee_serializers, CheckInSerializer,CheckOutSerializer,AtendimentoSerializer
-
+from .serializers import Employee_serializers, CheckInSerializer,CheckOutSerializer,AtendimentoSerializer,EmployeeAttendanceSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from datetime import datetime
 from rest_framework.generics import ListAPIView
+from rest_framework import generics
+from datetime import date
 
 class Employee_view(APIView):
 
@@ -95,4 +96,19 @@ class AtendimentosPorDataView(APIView):
         atendimentos = Atendimento.objects.filter(data=data_formatada)
         serializer = AtendimentoSerializer(atendimentos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class EmployeeAttendanceListView(generics.ListAPIView):
+    serializer_class = EmployeeAttendanceSerializer
+    queryset = Funcionario.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        
+        data = {
+            'date': date.today().strftime("%d-%m-%Y"),
+            'employees': serializer.data
+        }
+        
+        return Response(data)    
 

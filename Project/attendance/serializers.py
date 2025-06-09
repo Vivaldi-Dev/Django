@@ -81,3 +81,39 @@ class AtendimentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Atendimento
         fields = ['id', 'funcionario_id', 'funcionario_nome', 'data', 'checkin', 'checkout']
+
+
+class EmployeeAttendanceSerializer(serializers.ModelSerializer):
+    status = serializers.SerializerMethodField()
+    checkin_time = serializers.SerializerMethodField()
+    checkout_time = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Funcionario
+        fields = ['id', 'nome', 'codigo', 'status', 'checkin_time', 'checkout_time']
+
+    def get_status(self, obj):
+        hoje = date.today()
+        try:
+            atendimento = Atendimento.objects.get(funcionario=obj, data=hoje)
+            if atendimento.checkout:
+                return "Checked Out"
+            return "Checked In"
+        except Atendimento.DoesNotExist:
+            return "Not Checked In"
+
+    def get_checkin_time(self, obj):
+        hoje = date.today()
+        try:
+            atendimento = Atendimento.objects.get(funcionario=obj, data=hoje)
+            return atendimento.checkin.strftime("%d-%m-%Y %H:%M") if atendimento.checkin else None
+        except Atendimento.DoesNotExist:
+            return None
+
+    def get_checkout_time(self, obj):
+        hoje = date.today()
+        try:
+            atendimento = Atendimento.objects.get(funcionario=obj, data=hoje)
+            return atendimento.checkout.strftime("%d-%m-%Y %H:%M") if atendimento.checkout else None
+        except Atendimento.DoesNotExist:
+            return None
