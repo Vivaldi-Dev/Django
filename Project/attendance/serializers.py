@@ -91,7 +91,7 @@ class EmployeeAttendanceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Funcionario
-        fields = ['id', 'nome', 'codigo', 'status', 'checkin_time', 'checkout_time']
+        fields = ['id', 'nome', 'codigo', 'status', 'checkin_time', 'checkout_time','cargo']
 
     def get_status(self, obj):
         hoje = date.today()

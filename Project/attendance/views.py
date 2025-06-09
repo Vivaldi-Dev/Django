@@ -38,7 +38,6 @@ class CheckInView(APIView):
         if serializer.is_valid():
             atendimento = serializer.save()
 
-            # Usando um serializer específico para a resposta
             response_serializer = AtendimentoSerializer(atendimento)
 
             response_data = {
