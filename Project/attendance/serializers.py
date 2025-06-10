@@ -13,7 +13,7 @@ class Employee_serializers(serializers.ModelSerializer):
 
 
 class CheckInSerializer(serializers.Serializer):
-    codigo = serializers.CharField(write_only=True)  # Adicione write_only=True
+    codigo = serializers.CharField(write_only=True)
     checkin = serializers.DateTimeField(input_formats=["%d-%m-%Y %H:%M"])
     funcionario_nome = serializers.CharField(source='funcionario.nome', read_only=True)
     funcionario_codigo = serializers.CharField(source='funcionario.codigo', read_only=True)
@@ -117,4 +117,4 @@ class EmployeeAttendanceSerializer(serializers.ModelSerializer):
             atendimento = Atendimento.objects.get(funcionario=obj, data=hoje)
             return atendimento.checkout.strftime("%d-%m-%Y %H:%M") if atendimento.checkout else None
         except Atendimento.DoesNotExist:
-            return None
+            return None       
