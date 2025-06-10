@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Funcionario, Atendimento, Atividade
-from datetime import date
+from datetime import date,timedelta
 
 
 class Employee_serializers(serializers.ModelSerializer):
@@ -83,7 +83,6 @@ class AtendimentoSerializer(serializers.ModelSerializer):
         model = Atendimento
         fields = ['id', 'funcionario_id', 'funcionario_nome', 'data', 'checkin', 'checkout']
 
-
 class EmployeeAttendanceSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
     checkin_time = serializers.SerializerMethodField()
@@ -118,3 +117,73 @@ class EmployeeAttendanceSerializer(serializers.ModelSerializer):
             return atendimento.checkout.strftime("%d-%m-%Y %H:%M") if atendimento.checkout else None
         except Atendimento.DoesNotExist:
             return None       
+
+class MonthlyAttendanceSerializer(serializers.ModelSerializer):
+    days = serializers.SerializerMethodField()
+    total_present_days = serializers.SerializerMethodField()
+    total_absent_days = serializers.SerializerMethodField()
+    current_month = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Funcionario
+        fields = ['id', 'nome', 'codigo', 'current_month', 'days', 'total_present_days', 'total_absent_days']
+
+    def get_current_month(self, obj):
+        return date.today().strftime("%B %Y")  # Ex: "June 2023"
+
+    def get_days(self, obj):
+        today = date.today()
+        first_day = today.replace(day=1)
+        last_day = today  # Usamos apenas até o dia atual
+        
+        atendimentos = Atendimento.objects.filter(
+            funcionario=obj,
+            data__range=[first_day, last_day]
+        ).order_by('data')
+        
+        days_data = []
+        current_day = first_day
+        
+        while current_day <= last_day:
+            atendimento = atendimentos.filter(data=current_day).first()
+            
+            day_status = {
+                'date': current_day.strftime("%d-%m-%Y"),
+                'weekday': current_day.strftime("%A"),
+                'status': 'Ausente',
+                'checkin': None,
+                'checkout': None
+            }
+            
+            if atendimento:
+                if atendimento.checkout:
+                    day_status['status'] = 'Presente'
+                else:
+                    day_status['status'] = 'Check-in apenas'
+                
+                day_status['checkin'] = atendimento.checkin.strftime("%H:%M") if atendimento.checkin else None
+                day_status['checkout'] = atendimento.checkout.strftime("%H:%M") if atendimento.checkout else None
+            
+            days_data.append(day_status)
+            current_day += timedelta(days=1)
+        
+        return days_data
+
+    def get_total_present_days(self, obj):
+        today = date.today()
+        first_day = today.replace(day=1)
+        
+        return Atendimento.objects.filter(
+            funcionario=obj,
+            data__range=[first_day, today],
+            checkin__isnull=False
+        ).count()
+
+    def get_total_absent_days(self, obj):
+        today = date.today()
+        first_day = today.replace(day=1)
+        
+        total_days = (today - first_day).days + 1
+        present_days = self.get_total_present_days(obj)
+        
+        return total_days - present_days

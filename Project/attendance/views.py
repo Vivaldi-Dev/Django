@@ -6,14 +6,17 @@ from .serializers import (
     CheckOutSerializer,
     AtendimentoSerializer,
     EmployeeAttendanceSerializer,
+    MonthlyAttendanceSerializer
 )
+from django.shortcuts import get_object_or_404
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from datetime import datetime
 from rest_framework.generics import ListAPIView
 from rest_framework import generics
-from datetime import date
+from datetime import date,timedelta
 
 
 class Employee_view(APIView):
@@ -126,3 +129,10 @@ class EmployeeAttendanceListView(generics.ListAPIView):
         data = {"date": date.today().strftime("%d-%m-%Y"), "employees": serializer.data}
 
         return Response(data)
+
+class MonthlyAttendanceView(generics.RetrieveAPIView):
+    serializer_class = MonthlyAttendanceSerializer
+
+    def get_object(self):
+        employee_id = self.kwargs.get('employee_id')
+        return get_object_or_404(Funcionario, id=employee_id)
