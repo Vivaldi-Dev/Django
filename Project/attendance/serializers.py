@@ -241,10 +241,14 @@ class MonthlyAttendanceSerializer(serializers.ModelSerializer):
 class AtividadeSerializer(serializers.ModelSerializer):
     codigo = serializers.CharField(write_only=True)
     checkin = serializers.DateTimeField(
-        format="%d-%m-%Y %H:%M", input_formats=["%d-%m-%Y %H:%M"], required=False
+        format="%d-%m-%Y %H:%M", 
+        input_formats=["%d-%m-%Y %H:%M"], 
+        required=False
     )
     checkout = serializers.DateTimeField(
-        format="%d-%m-%Y %H:%M", input_formats=["%d-%m-%Y %H:%M"], required=False
+        format="%d-%m-%Y %H:%M", 
+        input_formats=["%d-%m-%Y %H:%M"], 
+        required=False
     )
     funcionario_nome = serializers.CharField(source="funcionario.nome", read_only=True)
 
@@ -265,25 +269,59 @@ class AtividadeSerializer(serializers.ModelSerializer):
         codigo = data.get("codigo")
         checkin = data.get("checkin")
         checkout = data.get("checkout")
+        descricao = data.get("descricao")
 
         try:
             funcionario = Funcionario.objects.get(codigo=codigo)
         except Funcionario.DoesNotExist:
-            raise serializers.ValidationError("Código de funcionário inválido.")
+            raise serializers.ValidationError({"codigo": "Código de funcionário inválido."})
 
         data["funcionario"] = funcionario
 
         if checkin:
             data["data"] = checkin.date()
+            if not descricao:
+                raise serializers.ValidationError(
+                    {"descricao": "Este campo é obrigatório quando faz check-in."}
+                )
         elif checkout:
             data["data"] = checkout.date()
+            # Não requer descrição para checkout
         else:
-            raise serializers.ValidationError("Informe check-in ou check-out.")
+            raise serializers.ValidationError(
+                {"checkin": "Informe pelo menos check-in ou check-out."}
+            )
 
         return data
 
     def create(self, validated_data):
+        codigo = validated_data.pop("codigo", None)
+        funcionario = validated_data.get("funcionario")
+        checkin = validated_data.get("checkin")
+        checkout = validated_data.get("checkout")
+        data = validated_data.get("data")
+
+        # Caso seja apenas CHECKOUT
+        if checkout and not checkin:
+            try:
+                atividade = Atividade.objects.filter(
+                    funcionario=funcionario,
+                    data=data,
+                    checkout__isnull=True
+                ).latest('checkin')  # Pega o registro mais recente sem checkout
+                
+                atividade.checkout = checkout
+                atividade.save()
+                return atividade
+
+            except Atividade.DoesNotExist:
+                raise serializers.ValidationError(
+                    {"checkout": "Nenhum check-in encontrado para realizar o check-out."}
+                )
+
         return Atividade.objects.create(**validated_data)
+
+
 
 class FuncionarioAtividadesHojeSerializer(serializers.ModelSerializer):
     atividades = serializers.SerializerMethodField()
@@ -309,4 +347,3 @@ class FuncionarioAtividadesHojeSerializer(serializers.ModelSerializer):
         except Atendimento.DoesNotExist:
             pass
         return "Não iniciado"
-
