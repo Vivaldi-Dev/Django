@@ -154,16 +154,16 @@ class AtividadeCreateView(generics.CreateAPIView):
     
 class FuncionariosAtividadesHojeView(ListAPIView):
     serializer_class = FuncionarioAtividadesHojeSerializer
-    
+
     def get_queryset(self):
         hoje = date.today()
-        
-        atendimentos_ids = Atendimento.objects.filter(data=hoje) \
-                             .values_list('funcionario_id', flat=True)
-        
-        atividades_ids = Atividade.objects.filter(data=hoje) \
-                           .values_list('funcionario_id', flat=True)
-        
-        funcionarios_ids = set(atendimentos_ids) | set(atividades_ids)
-        
+
+        funcionarios_com_atendimento = Atendimento.objects.filter(data=hoje) \
+            .values_list('funcionario_id', flat=True)
+
+        funcionarios_com_atividade = Atividade.objects.filter(data=hoje) \
+            .values_list('funcionario_id', flat=True)
+
+        funcionarios_ids = set(funcionarios_com_atendimento) | set(funcionarios_com_atividade)
+
         return Funcionario.objects.filter(id__in=funcionarios_ids)

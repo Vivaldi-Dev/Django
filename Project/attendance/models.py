@@ -21,10 +21,16 @@ class Atendimento(models.Model):
         return f"Atendimento de {self.funcionario.nome} em {self.data}"
 
 
-class Atividade(Atendimento):
+class Atividade(models.Model):
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, related_name='atividades')
+    data = models.DateField()
+    checkin = models.DateTimeField(null=True, blank=True)
+    checkout = models.DateTimeField(null=True, blank=True)
     descricao = models.TextField()
 
     def __str__(self):
         return f"Atividade: {self.descricao} ({self.funcionario.nome} - {self.data})"
+
+
 
 

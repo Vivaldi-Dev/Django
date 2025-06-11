@@ -274,68 +274,16 @@ class AtividadeSerializer(serializers.ModelSerializer):
         data["funcionario"] = funcionario
 
         if checkin:
-            data_checkin = checkin.date()
-            data["data"] = data_checkin
-
-            if Atividade.objects.filter(
-                funcionario=funcionario, data=data_checkin, checkin__isnull=False
-            ).exists():
-                raise serializers.ValidationError(
-                    "Este funcionário já fez check-in nesta data."
-                )
-
+            data["data"] = checkin.date()
         elif checkout:
-            data_checkout = checkout.date()
-            data["data"] = data_checkout
-
-            try:
-                atividade_existente = Atividade.objects.get(
-                    funcionario=funcionario, data=data_checkout
-                )
-            except Atividade.DoesNotExist:
-                raise serializers.ValidationError(
-                    "Não é possível fazer check-out sem um check-in existente."
-                )
-
-            if atividade_existente.checkout:
-                raise serializers.ValidationError(
-                    "Este funcionário já fez check-out nesta data."
-                )
-
-            self.instance = atividade_existente
-
+            data["data"] = checkout.date()
         else:
-            raise serializers.ValidationError(
-                "Informe pelo menos o check-in ou o check-out."
-            )
+            raise serializers.ValidationError("Informe check-in ou check-out.")
 
         return data
 
     def create(self, validated_data):
-        checkin = validated_data.pop("checkin", None)
-        checkout = validated_data.pop("checkout", None)
-        descricao = validated_data.pop("descricao", "")
-        funcionario = validated_data["funcionario"]
-        data_ref = validated_data["data"]
-
-        if self.instance:
-            atividade = self.instance
-            if checkout:
-                atividade.checkout = checkout
-            if descricao:
-                atividade.descricao = descricao
-            atividade.save()
-        else:
-            atividade = Atividade.objects.create(
-                funcionario=funcionario,
-                data=data_ref,
-                checkin=checkin,
-                checkout=checkout,
-                descricao=descricao,
-            )
-            
-        return atividade    
-
+        return Atividade.objects.create(**validated_data)
 
 class FuncionarioAtividadesHojeSerializer(serializers.ModelSerializer):
     atividades = serializers.SerializerMethodField()
@@ -356,6 +304,9 @@ class FuncionarioAtividadesHojeSerializer(serializers.ModelSerializer):
             atendimento = Atendimento.objects.get(funcionario=obj, data=hoje)
             if atendimento.checkout:
                 return "Finalizado"
-            return "Em andamento"
+            if atendimento.checkin:
+                return "Em andamento"
         except Atendimento.DoesNotExist:
-            return "Não iniciado"
+            pass
+        return "Não iniciado"
+
