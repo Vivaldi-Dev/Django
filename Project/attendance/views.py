@@ -6,9 +6,12 @@ from .serializers import (
     CheckOutSerializer,
     AtendimentoSerializer,
     EmployeeAttendanceSerializer,
-    MonthlyAttendanceSerializer
+    MonthlyAttendanceSerializer,
+    AtividadeSerializer,
+    FuncionarioAtividadesHojeSerializer
 )
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -136,3 +139,31 @@ class MonthlyAttendanceView(generics.RetrieveAPIView):
     def get_object(self):
         employee_id = self.kwargs.get('employee_id')
         return get_object_or_404(Funcionario, id=employee_id)
+    
+
+class AtividadeCreateView(generics.CreateAPIView):
+    queryset = Atividade.objects.all()
+    serializer_class = AtividadeSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+class FuncionariosAtividadesHojeView(ListAPIView):
+    serializer_class = FuncionarioAtividadesHojeSerializer
+    
+    def get_queryset(self):
+        hoje = date.today()
+        
+        atendimentos_ids = Atendimento.objects.filter(data=hoje) \
+                             .values_list('funcionario_id', flat=True)
+        
+        atividades_ids = Atividade.objects.filter(data=hoje) \
+                           .values_list('funcionario_id', flat=True)
+        
+        funcionarios_ids = set(atendimentos_ids) | set(atividades_ids)
+        
+        return Funcionario.objects.filter(id__in=funcionarios_ids)

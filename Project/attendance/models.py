@@ -26,3 +26,5 @@ class Atividade(Atendimento):
 
     def __str__(self):
         return f"Atividade: {self.descricao} ({self.funcionario.nome} - {self.data})"
+
+

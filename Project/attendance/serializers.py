@@ -129,12 +129,12 @@ class MonthlyAttendanceSerializer(serializers.ModelSerializer):
         fields = ['id', 'nome', 'codigo', 'current_month', 'days', 'total_present_days', 'total_absent_days']
 
     def get_current_month(self, obj):
-        return date.today().strftime("%B %Y")  # Ex: "June 2023"
+        return date.today().strftime("%B %Y")  
 
     def get_days(self, obj):
         today = date.today()
         first_day = today.replace(day=1)
-        last_day = today  # Usamos apenas até o dia atual
+        last_day = today 
         
         atendimentos = Atendimento.objects.filter(
             funcionario=obj,
@@ -187,3 +187,77 @@ class MonthlyAttendanceSerializer(serializers.ModelSerializer):
         present_days = self.get_total_present_days(obj)
         
         return total_days - present_days
+    
+class AtividadeSerializer(serializers.ModelSerializer):
+    codigo = serializers.CharField(write_only=True)
+    checkin = serializers.DateTimeField(format="%d-%m-%Y %H:%M", input_formats=["%d-%m-%Y %H:%M"], required=False)
+    checkout = serializers.DateTimeField(format="%d-%m-%Y %H:%M", input_formats=["%d-%m-%Y %H:%M"], required=False)
+    funcionario_nome = serializers.CharField(source='funcionario.nome', read_only=True)
+
+    class Meta:
+        model = Atividade
+        fields = ['id', 'codigo', 'funcionario_nome', 'data', 'checkin', 'checkout', 'descricao']
+        read_only_fields = ['data']
+
+    def validate(self, data):
+        codigo = data.get('codigo')
+        checkin = data.get('checkin')
+        checkout = data.get('checkout')
+
+        try:
+            funcionario = Funcionario.objects.get(codigo=codigo)
+        except Funcionario.DoesNotExist:
+            raise serializers.ValidationError("Código de funcionário inválido.")
+
+        data['funcionario'] = funcionario
+
+        if checkin:
+            data_checkin = checkin.date()
+            data['data'] = data_checkin
+            
+            if Atendimento.objects.filter(funcionario=funcionario, data=data_checkin).exists():
+                raise serializers.ValidationError("Este funcionário já tem um registro para esta data.")
+
+        if checkout and not checkin:
+            raise serializers.ValidationError("Não é possível fazer check-out sem check-in.")
+
+        return data
+
+    def create(self, validated_data):
+        codigo = validated_data.pop('codigo')
+        checkin = validated_data.pop('checkin', None)
+        checkout = validated_data.pop('checkout', None)
+        descricao = validated_data.pop('descricao')
+        
+        atividade = Atividade.objects.create(
+            funcionario=validated_data['funcionario'],
+            data=validated_data.get('data', date.today()),
+            checkin=checkin,
+            checkout=checkout,
+            descricao=descricao
+        )
+        
+        return atividade    
+    
+class FuncionarioAtividadesHojeSerializer(serializers.ModelSerializer):
+    atividades = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Funcionario
+        fields = ['id', 'nome', 'codigo', 'cargo', 'status', 'atividades']
+    
+    def get_atividades(self, obj):
+        hoje = date.today()
+        atividades = Atividade.objects.filter(funcionario=obj, data=hoje)
+        return AtividadeSerializer(atividades, many=True).data
+    
+    def get_status(self, obj):
+        hoje = date.today()
+        try:
+            atendimento = Atendimento.objects.get(funcionario=obj, data=hoje)
+            if atendimento.checkout:
+                return "Finalizado"
+            return "Em andamento"
+        except Atendimento.DoesNotExist:
+            return "Não iniciado"    
